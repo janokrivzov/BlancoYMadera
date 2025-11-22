@@ -4,10 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo Blanco & Madera</title>
-    <!-- Chosen Palette: Warm Neutrals (Beige/Tan) - Enfocado en una herramienta de venta clara y funcional. -->
-    <!-- Application Structure Plan: Diseño de dos paneles (Catálogo y Carrito). En móvil, se usa un sistema de pestañas (Tabs) con una barra de navegación inferior fija para alternar entre el Catálogo y la Cotización, resolviendo el problema de desplazamiento vertical y mejorando la UX móvil. Se añaden botones de acción (Copiar, Imprimir) al pie del Carrito. -->
-    <!-- Visualization & Content Choices: La interfaz se basa en listas dinámicas, priorizando la usabilidad y la claridad del precio final. No se utilizan Chart.js, Plotly, SVG ni Mermaid. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -24,31 +20,28 @@
         .amber-gradient {
             background-image: linear-gradient(to right, #d4a753, #b18b45);
         }
-        /* Estilos específicos para integrar el logo SVG de "blanco&madera" */
         .logo-text {
-            font-family: serif; /* Usar serif para simular el estilo del logo */
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 800; /* font-extrabold */
-            color: #1c1917; /* stone-900 (Negro para alto contraste) */
+            font-family: serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #1c1917;
             line-height: 1;
         }
         .deco-home {
-            font-size: 0.75rem; /* text-xs */
+            font-size: 0.75rem;
             letter-spacing: 0.3em;
-            color: #78716c; /* stone-500 */
+            color: #78716c;
             text-align: center;
             display: block;
             margin-top: 0.1rem;
         }
-        /* LAYOUT DE CABECERA - CENTRADO Y LIMPIO PARA ESCRITORIO */
         .header-content {
             display: flex; 
-            flex-direction: column; /* Apilar logo y títulos */
-            align-items: center; /* Centrar todo horizontalmente */
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
         .logo-container {
-            /* Hacer que el logo ocupe el ancho y esté centrado */
             width: auto;
             margin-bottom: 0.5rem; 
             display: flex;
@@ -59,18 +52,18 @@
              padding-bottom: 0.5rem;
         }
         h1.main-title {
-            font-size: 2.5rem; /* text-4xl */
-            line-height: 1.1; /* Ajustar el interlineado */
+            font-size: 2.5rem;
+            line-height: 1.1;
             margin-top: 0;
         }
-        /* Ocultar descripción en móvil para ahorrar espacio (mantenemos esta regla) */
         @media (max-width: 767px) {
             .header-content p {
                 display: none;
             }
+            main {
+                padding-bottom: 5rem; 
+            }
         }
-        
-        /* NAVEGACIÓN FIJA INFERIOR (Solo para Móvil) */
         .mobile-nav {
             position: fixed;
             bottom: 0;
@@ -80,13 +73,43 @@
         }
         @media (min-width: 768px) {
             .mobile-nav {
-                display: none; /* Ocultar en desktop */
+                display: none;
             }
         }
-        /* Ajuste de padding para que el contenido no quede oculto por la barra fija */
-        @media (max-width: 767px) {
-            main {
-                padding-bottom: 5rem; 
+        
+        /* Estilos para el Toast (Notificación) */
+        #toast-container {
+            position: fixed;
+            bottom: 80px; /* Arriba de la nav bar móvil */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
+            pointer-events: none;
+        }
+        .toast {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: translateY(20px);
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 768px) {
+            #toast-container {
+                bottom: 20px;
+                right: 20px;
+                left: auto;
+                transform: none;
             }
         }
 
@@ -104,14 +127,9 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #b18b45;
         }
-        
-        /* Estilos de impresión (PDF) */
         @media print {
-            .no-print {
-                display: none !important;
-            }
+            .no-print { display: none !important; }
             .print-header {
-                /* Mostrar un encabezado limpio y grande para el PDF */
                 display: block !important; 
                 text-align: center;
                 padding-bottom: 20px;
@@ -154,19 +172,14 @@
             .discount-print-summary {
                 margin-top: 10px;
             }
-            body {
-                background-color: #fff !important;
-            }
+            body { background-color: #fff !important; }
         }
     </style>
 </head>
 <body class="text-stone-800">
 
     <header class="bg-white shadow-lg sticky top-0 z-10 no-print">
-        <!-- Contenedor del encabezado -->
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 header-content">
-            
-            <!-- Logo Integrado (Centrado y reorganizado) -->
             <div class="logo-container">
                 <div class="flex flex-col items-center">
                     <span class="logo-text">blanco&madera</span>
@@ -174,7 +187,6 @@
                     <span class="deco-home">DECO HOME</span>
                 </div>
             </div>
-            
             <div class="header-title-block">
                 <h1 class="main-title text-4xl font-extrabold text-amber-800 tracking-wide">CATÁLOGO</h1>
                 <p class="text-stone-600 mt-1">Selecciona productos para generar la cotización del cliente.</p>
@@ -183,8 +195,6 @@
     </header>
 
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
-        
-        <!-- Controles de Filtro -->
         <div class="bg-white p-6 rounded-xl shadow-lg mb-8 no-print" id="filters-container">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
@@ -205,15 +215,12 @@
             </div>
         </div>
 
-        <!-- Layout para Impresión (OCULTO en pantalla, SOLO se ve al imprimir) -->
-        <div id="print-view" class="hidden print-header">
-            <!-- Contenido generado por JS al imprimir -->
-        </div>
+        <div id="print-view" class="hidden print-header"></div>
+        
+        <!-- Contenedor de Notificaciones -->
+        <div id="toast-container"></div>
 
-        <!-- Catálogo y Carrito (Layout Adaptativo) -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Columna Izquierda: Catálogo de Productos -->
             <div id="catalog-panel" class="bg-white p-6 rounded-xl shadow-lg" data-view="catalog">
                 <h2 class="text-xl font-semibold mb-4 text-amber-800 border-b pb-2 border-stone-200">Catálogo de Productos Disponibles</h2>
                 <div id="product-list" class="overflow-y-auto h-[60vh] md:h-[70vh] pr-4 space-y-2">
@@ -221,19 +228,16 @@
                 </div>
             </div>
             
-            <!-- Columna Derecha: Carrito de Cotización -->
             <div id="cart-panel" class="hidden md:flex flex-col bg-white p-6 rounded-xl shadow-lg" data-view="cart">
                 <h2 class="text-xl font-semibold mb-4 text-amber-800 border-b pb-2 border-stone-200">Cotización Actual</h2>
                 
-                <!-- Nuevo Campo: Nombre y Apellido -->
                 <div class="mb-4 no-print">
                     <label for="client-name" class="block text-sm font-semibold text-stone-700 mb-1">Nombre y Apellido (para agendar):</label>
                     <input type="text" id="client-name" placeholder="Ej: Pepito Gomez" class="w-full rounded-lg border-stone-300 shadow-md focus:border-amber-600 focus:ring-amber-600 p-2">
                 </div>
                 
-                <!-- Nuevo Campo: Número de WhatsApp -->
                 <div class="mb-4 no-print">
-                    <label for="whatsapp-number" class="block text-sm font-semibold text-stone-700 mb-1">Tu Número de WhatsApp (Formato: 549...):</label>
+                    <label for="whatsapp-number" class="block text-sm font-semibold text-stone-700 mb-1">Número de WhatsApp del Cliente (Formato: 549...):</label>
                     <input type="tel" id="whatsapp-number" placeholder="Ej: 5493415551234" class="w-full rounded-lg border-stone-300 shadow-md focus:border-amber-600 focus:ring-amber-600 p-2">
                 </div>
 
@@ -241,7 +245,6 @@
                     <p id="empty-cart-message" class="text-stone-500 text-center mt-8">El carrito está vacío. Agrega productos del catálogo.</p>
                 </div>
 
-                <!-- Opciones de Descuento y Total -->
                 <div class="mt-4 pt-4 border-t-2 border-amber-500/50">
                     <div class="mb-4 no-print">
                         <label for="discount-select" class="block text-sm font-semibold text-stone-700 mb-1">Aplicar Descuento:</label>
@@ -259,24 +262,35 @@
                         <span id="cart-total" class="text-4xl font-extrabold text-amber-800 cart-total-print">$0</span>
                     </div>
 
-                    <!-- Botones de Acción -->
+                    <!-- BOTONES DE ACCIÓN: Ahora tienes DOS opciones -->
                     <div class="space-y-3 no-print">
-                        <button id="send-whatsapp-button" class="w-full bg-green-500 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-green-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-offset-2">
-                            Enviar por WhatsApp
+                        <!-- OPCIÓN 1: TEXTO DIRECTO (Prioridad Número) -->
+                        <button id="send-whatsapp-text-button" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-green-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-offset-2 flex justify-center items-center gap-2">
+                            <span>💬</span> Enviar Texto al Cliente (Directo)
                         </button>
-                        <button id="print-button" class="w-full bg-stone-500 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-stone-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-stone-400 focus:ring-offset-2">
-                            Imprimir / Guardar como PDF
+                        
+                        <!-- OPCIÓN 2: IMAGEN (Prioridad Estética) -->
+                        <button id="share-image-button" class="w-full bg-amber-500 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-amber-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-amber-400 focus:ring-offset-2 flex justify-center items-center gap-2">
+                            <span>🖼️</span> Generar y Compartir Imagen
                         </button>
-                        <button id="clear-cart-button" class="w-full bg-red-500 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-offset-2">
-                            Vaciar Carrito
-                        </button>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <button id="print-button" class="bg-stone-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-stone-600 transition duration-300 focus:outline-none">
+                                🖨️ Imprimir / PDF
+                            </button>
+                            <button id="clear-cart-button" class="bg-red-500 text-white font-bold py-3 rounded-lg shadow-md hover:bg-red-600 transition duration-300 focus:outline-none">
+                                🗑️ Vaciar
+                            </button>
+                        </div>
+                        <p class="text-xs text-stone-400 text-center mt-1">
+                            *El botón "Texto" abre el chat directo. El botón "Imagen" te pedirá seleccionar el contacto.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Barra de Navegación Fija para Móvil -->
     <div class="mobile-nav bg-white shadow-2xl p-3 border-t border-stone-200">
         <div class="flex justify-around">
             <button id="tab-catalog" onclick="showView('catalog')" class="flex flex-col items-center text-amber-800 font-semibold focus:outline-none">
@@ -286,16 +300,14 @@
             <button id="tab-cart" onclick="showView('cart')" class="flex flex-col items-center text-stone-500 font-semibold focus:outline-none relative">
                 <span class="text-2xl">📝</span>
                 <span class="text-xs mt-1">Cotización</span>
-                <span id="cart-item-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full transform translate-x-3 -translate-y-2 opacity-0 transition duration-300">
+                <span id="cart-item-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full transform translate-x-3 -translate-y-2 opacity-0 transition duration-300 shadow-sm">
                     0
                 </span>
             </button>
         </div>
     </div>
 
-
     <script>
-        // Datos brutos del catálogo
         const rawData = [
             {"Product Name":"ALZAPAÑOS","Price":"NaN"},
             {"Product Name":"Alzapaño Rosario","Price":"4500.0"},
@@ -461,10 +473,9 @@
 
         let productData = [];
         let categories = new Set();
-        let cart = {}; // { id: {nombre, precio, cantidad} }
+        let cart = {};
         let uniqueIdCounter = 0;
 
-        // Función para poblar las opciones de filtro de categoría (GLOBAL)
         function populateCategoryFilter() {
             const categoryFilter = document.getElementById('category-filter');
             categories.forEach(category => {
@@ -475,32 +486,27 @@
             });
         }
         
-        // Reparo: Función para parsear datos y generar IDs únicos
         function parseData() {
             let currentCategory = "Desconocido";
             rawData.forEach(item => {
-                // CORRECCIÓN FINAL: Asegurar que el precio sea un número válido y entero
-                // 1. Reemplazar cualquier cosa que no sea dígito por vacío (excepto el punto, por si hay decimales)
                 const cleanedPriceString = item.Price ? item.Price.replace(/[^\d.]/g, '').trim() : '0';
-                // 2. Convertir a entero (parseInt)
                 const price = parseInt(cleanedPriceString); 
                 const name = item["Product Name"].trim();
                 
-                if (isNaN(price) || price === 0) { // Si no es un número o es 0, asumimos que es un título de categoría
+                if (isNaN(price) || price === 0) {
                     currentCategory = name;
                     categories.add(name);
                 } else {
                     productData.push({
-                        id: uniqueIdCounter++, // Generar ID único
+                        id: uniqueIdCounter++,
                         categoria: currentCategory,
                         nombre: name,
-                        precio: price // Precio ahora es un número entero limpio
+                        precio: price
                     });
                 }
             });
         }
 
-        // Reparo: Función para formatear moneda
         function formatCurrency(value) {
             return new Intl.NumberFormat('es-AR', {
                 style: 'currency',
@@ -510,7 +516,6 @@
             }).format(value);
         }
 
-        // Reparo: Función principal para renderizar el carrito y CALCULAR EL TOTAL
         function renderCart() {
             const cartList = document.getElementById('cart-list');
             const cartTotalEl = document.getElementById('cart-total');
@@ -529,7 +534,7 @@
                 const subtotal = numericPrice * item.cantidad;
                 subtotalWithoutDiscount += subtotal; 
 
-                cartItemsCount += item.cantidad; // Contar unidades en el carrito
+                cartItemsCount += item.cantidad;
 
                 const itemDiv = document.createElement('div');
                 itemDiv.className = "bg-white p-3 rounded-lg border border-stone-200 flex justify-between items-center item-card";
@@ -551,23 +556,17 @@
                 cartList.appendChild(itemDiv);
             }
 
-            // Aplicar Descuento
             const totalWithDiscount = subtotalWithoutDiscount * (1 - discountRate);
 
-            // Actualizar mensaje de carrito vacío (Añadir verificación de nulidad)
             if (emptyMessage) {
                 emptyMessage.style.display = cartItemsCount === 0 ? 'block' : 'none';
             }
             
-            // Actualizar contador de ítems para móvil
             cartItemCountEl.textContent = cartItemsCount > 0 ? cartItemsCount : '';
             cartItemCountEl.style.opacity = cartItemsCount > 0 ? 1 : 0;
 
-
-            // Actualizar Total General
             cartTotalEl.textContent = formatCurrency(totalWithDiscount);
 
-            // Mostrar el descuento aplicado
             if (discountRate > 0) {
                  const discountAmount = subtotalWithoutDiscount * discountRate;
                  const discountDisplay = document.createElement('p');
@@ -581,11 +580,9 @@
                  cartList.appendChild(subtotalDisplay);
             }
             
-            // Llamar a la función de renderizado de impresión/PDF
             renderPrintView(subtotalWithoutDiscount, totalWithDiscount, discountRate);
         }
         
-        // Reparo: Lógica para cambiar cantidad
         window.changeQuantity = function(id, delta) {
             id = parseInt(id);
             if (cart[id]) {
@@ -597,24 +594,42 @@
             renderCart(); 
         };
 
-        // Reparo: Lógica para agregar al carrito
         window.addToCart = function(id) {
             id = parseInt(id);
             if (cart[id]) {
                 cart[id].cantidad += 1;
+                showToast(`¡Agregado! ${cart[id].nombre}`);
             } else {
                 const product = productData.find(p => p.id === id);
                 if (product) {
                     cart[id] = { ...product, cantidad: 1 };
+                    showToast(`¡Agregado! ${product.nombre}`);
                 }
             }
             renderCart(); 
         };
 
-        // Lógica de Vistas (Tabs en Móvil)
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+
         window.showView = function(viewName) {
             const isMobile = window.innerWidth < 768;
-            if (!isMobile) return; // Solo funciona en móvil
+            if (!isMobile) return;
 
             const catalogPanel = document.getElementById('catalog-panel');
             const cartPanel = document.getElementById('cart-panel');
@@ -622,7 +637,6 @@
             const tabCatalog = document.getElementById('tab-catalog');
             const tabCart = document.getElementById('tab-cart');
             
-            // Ocultar/Mostrar Paneles
             if (viewName === 'catalog') {
                 catalogPanel.style.display = 'block';
                 filtersContainer.style.display = 'block';
@@ -631,10 +645,10 @@
                 tabCart.classList.remove('text-amber-800');
                 tabCart.classList.add('text-stone-500');
                 tabCatalog.classList.remove('text-stone-500');
-            } else { // viewName === 'cart'
+            } else {
                 catalogPanel.style.display = 'none';
                 filtersContainer.style.display = 'none';
-                cartPanel.style.display = 'flex'; // Usamos flex para la columna derecha
+                cartPanel.style.display = 'flex';
                 tabCart.classList.add('text-amber-800');
                 tabCatalog.classList.remove('text-amber-800');
                 tabCatalog.classList.add('text-stone-500');
@@ -642,16 +656,67 @@
             }
         };
 
-
-        // Lógica de Exportación a Imagen (WhatsApp)
-        async function sendQuoteViaWhatsApp() {
+        // OPCIÓN 1: ENVIAR SOLO TEXTO (Abre Chat Directo al Número)
+        async function sendQuoteViaWhatsAppText() {
             const clientName = document.getElementById('client-name').value.trim();
-            const whatsappNumber = document.getElementById('whatsapp-number').value.trim().replace(/\D/g, ''); // Limpia solo números
+            const whatsappNumber = document.getElementById('whatsapp-number').value.trim().replace(/\D/g, ''); 
 
             if (!whatsappNumber || Object.keys(cart).length === 0) {
-                alert("Por favor, ingresa tu número de WhatsApp y añade al menos un producto al carrito.");
+                alert("Por favor, ingresa el número de WhatsApp del cliente y añade al menos un producto al carrito.");
                 return;
             }
+
+            const discountRate = parseFloat(document.getElementById('discount-select').value);
+            let subtotal = 0;
+            const items = [];
+
+            for (const id in cart) {
+                const item = cart[id];
+                const itemSubtotal = item.precio * item.cantidad;
+                subtotal += itemSubtotal;
+                items.push({ nombre: item.nombre, cantidad: item.cantidad, subtotal: itemSubtotal });
+            }
+
+            const totalWithDiscount = subtotal * (1 - discountRate);
+            const discountApplied = discountRate > 0 ? subtotal * discountRate : 0;
+            const formattedDate = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            const summaryLines = [
+                '*Cotización Blanco & Madera*',
+                `Fecha: ${formattedDate}`,
+                `Cliente: ${clientName || 'No especificado'}`,
+                '',
+                '*Detalle de productos:*'
+            ];
+            items.forEach((item) => {
+                summaryLines.push(`- ${item.cantidad} x ${item.nombre}: ${formatCurrency(item.subtotal)}`);
+            });
+            summaryLines.push('');
+            if (discountRate > 0) {
+                summaryLines.push(`Subtotal sin descuento: ${formatCurrency(subtotal)}`);
+                summaryLines.push(`Descuento (${(discountRate * 100).toFixed(0)}%): -${formatCurrency(discountApplied)}`);
+            }
+            summaryLines.push(`*TOTAL FINAL: ${formatCurrency(totalWithDiscount)}*`);
+            summaryLines.push('');
+            summaryLines.push('Gracias por confiar en Blanco & Madera ✨');
+
+            const whatsappText = encodeURIComponent(summaryLines.join('\n'));
+            // AQUÍ ESTÁ EL LINK DIRECTO AL NÚMERO
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappText}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // OPCIÓN 2: GENERAR Y COMPARTIR IMAGEN (Abre Menú Compartir Sistema - Requiere elegir contacto)
+        async function shareQuoteAsImage() {
+            const clientName = document.getElementById('client-name').value.trim();
+            const whatsappNumber = document.getElementById('whatsapp-number').value.trim().replace(/\D/g, '');
+            
+            if (Object.keys(cart).length === 0) {
+                alert("El carrito está vacío.");
+                return;
+            }
+
+            showToast("Generando imagen, por favor espera...");
 
             const discountRate = parseFloat(document.getElementById('discount-select').value);
             let subtotal = 0;
@@ -672,38 +737,7 @@
             const discountApplied = discountRate > 0 ? subtotal * discountRate : 0;
             const formattedDate = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
 
-            const summaryLines = [
-                'Cotización Blanco & Madera',
-                `Fecha: ${formattedDate}`,
-                `Nombre y Apellido: ${clientName || 'No especificado'}`,
-                `Teléfono: +${whatsappNumber}`,
-                '',
-                'Detalle de productos:'
-            ];
-
-            items.forEach((item) => {
-                summaryLines.push(`- ${item.cantidad} x ${item.nombre}: ${formatCurrency(item.subtotal)}`);
-            });
-
-            summaryLines.push('');
-            if (discountRate > 0) {
-                summaryLines.push(`Subtotal sin descuento: ${formatCurrency(subtotal)}`);
-                summaryLines.push(`Descuento (${(discountRate * 100).toFixed(0)}%): -${formatCurrency(discountApplied)}`);
-            }
-            summaryLines.push(`TOTAL FINAL: ${formatCurrency(totalWithDiscount)}`);
-            summaryLines.push('');
-            summaryLines.push('Gracias por tu confianza en Blanco & Madera ✨');
-
-            const whatsappText = encodeURIComponent(summaryLines.join('\n'));
-
-            // Si no hay soporte para compartir imágenes, abrir WhatsApp Web/App con el resumen de texto
-            if (!navigator.canShare || !navigator.canShare({ files: [new File([''], 'placeholder.txt', { type: 'text/plain' })] })) {
-                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappText}`;
-                window.open(whatsappUrl, '_blank');
-                return;
-            }
-
-            // Calcular altura del canvas según la cantidad de productos, dejando espacio extra para el mensaje final
+            // Configuración del Canvas
             const headerHeight = 260;
             const itemHeight = 42;
             const totalsHeight = discountRate > 0 ? 190 : 150;
@@ -716,20 +750,21 @@
             canvas.height = canvasHeight;
             const ctx = canvas.getContext('2d');
 
-            // Fondo principal blanco para máxima legibilidad en WhatsApp
+            // Fondo blanco
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-            // Marco superior con el logo completo inspirado en la referencia
+            // --- DIBUJAR CONTENIDO ---
             const logoCenterX = canvasWidth / 2;
             const headerTop = 35;
 
+            // Logo Simulado
             ctx.fillStyle = '#0b0b0b';
             ctx.textAlign = 'center';
             ctx.font = '700 48px "Inter", serif';
             ctx.fillText('blanco&madera', logoCenterX, headerTop + 55);
 
-            // Línea del logo
+            // Línea separadora logo
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#0b0b0b';
             ctx.beginPath();
@@ -740,18 +775,18 @@
             ctx.font = '600 16px Inter, sans-serif';
             ctx.fillText('DECO HOME', logoCenterX, headerTop + 88);
 
-            // Título de la pieza
+            // Título
             ctx.font = 'bold 24px Inter, sans-serif';
             ctx.textAlign = 'left';
             ctx.fillText('detalle de compra', 40, headerTop + 122);
 
-            // Datos del cliente y fecha
+            // Info Cliente
             let cursorY = 200;
             ctx.fillStyle = '#0b0b0b';
             ctx.font = '20px Inter, sans-serif';
             ctx.fillText(`Fecha: ${formattedDate}`, 40, cursorY);
             cursorY += 32;
-            ctx.fillText(`Nombre y Apellido: ${clientName || 'No especificado'}`, 40, cursorY);
+            ctx.fillText(`Cliente: ${clientName || 'No especificado'}`, 40, cursorY);
             cursorY += 32;
             ctx.fillText(`Teléfono: +${whatsappNumber}`, 40, cursorY);
             cursorY += 48;
@@ -760,21 +795,28 @@
             ctx.fillText('Detalle de productos', 40, cursorY);
             cursorY += 24;
 
+            // Lista de Items
             ctx.font = '18px Inter, sans-serif';
             items.forEach((item) => {
                 ctx.fillStyle = '#0b0b0b';
-                ctx.fillText(`${item.nombre} x${item.cantidad}`, 40, cursorY + 22);
+                ctx.textAlign = 'left';
+                // Truncar nombre si es muy largo
+                let displayName = item.nombre;
+                if (displayName.length > 60) displayName = displayName.substring(0, 57) + '...';
+                
+                ctx.fillText(`${displayName} x${item.cantidad}`, 40, cursorY + 22);
                 ctx.textAlign = 'right';
                 ctx.fillText(`${formatCurrency(item.subtotal)}`, canvasWidth - 40, cursorY + 22);
-                ctx.textAlign = 'left';
                 cursorY += itemHeight;
             });
 
+            ctx.textAlign = 'left';
             ctx.fillStyle = '#78716c';
             ctx.font = '18px Inter, sans-serif';
             ctx.fillText('-------------------------------------------', 40, cursorY);
             cursorY += 28;
 
+            // Totales
             if (discountRate > 0) {
                 ctx.fillStyle = '#0b0b0b';
                 ctx.fillText(`Subtotal sin descuento: ${formatCurrency(subtotal)}`, 40, cursorY);
@@ -787,45 +829,51 @@
             ctx.fillStyle = '#0b0b0b';
             ctx.font = 'bold 24px Inter, sans-serif';
             ctx.fillText('TOTAL FINAL:', 40, cursorY);
+            ctx.font = 'bold 32px Inter, sans-serif'; // Precio más grande
+            ctx.fillStyle = '#d4a753';
             ctx.fillText(`${formatCurrency(totalWithDiscount)}`, 230, cursorY);
-            cursorY += 40;
+            cursorY += 50;
 
-            ctx.textAlign = 'left';
-            cursorY += 20;
+            // Footer
+            ctx.textAlign = 'center';
             ctx.fillStyle = '#0b0b0b';
             ctx.font = '18px Inter, sans-serif';
-            ctx.fillText('Gracias por tu confianza en Blanco & Madera ✨', 40, cursorY);
+            ctx.fillText('Gracias por tu confianza en Blanco & Madera ✨', canvasWidth / 2, cursorY + 30);
 
-            const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
-            if (!blob) {
-                alert('No se pudo generar la imagen de la cotización.');
-                return;
-            }
+            // --- GENERAR BLOB Y COMPARTIR ---
+            canvas.toBlob(async (blob) => {
+                if (!blob) {
+                    alert('Error generando la imagen.');
+                    return;
+                }
+                const file = new File([blob], 'cotizacion_blanco_madera.png', { type: 'image/png' });
 
-            const quoteFile = new File([blob], 'cotizacion-blanco-madera.png', { type: 'image/png' });
-
-            // Uso del Web Share API (cuando está disponible)
-            if (navigator.canShare && navigator.canShare({ files: [quoteFile] })) {
-                const greetingName = clientName || 'Nombre y Apellido';
-                await navigator.share({
-                    files: [quoteFile],
-                    title: 'Cotización Blanco & Madera',
-                    text: `Hola, ${greetingName}, te adjunto el detalle de tu compra! Muchas gracias por confiar en Blanco & Madera ✨`
-                });
-                return;
-            }
-
-            // Fallback: abrir WhatsApp Web/App con el resumen de texto
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappText}`;
-            window.open(whatsappUrl, '_blank');
+                // Intentar usar Web Share API
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Cotización Blanco & Madera',
+                            text: `Hola ${clientName}, te envío el detalle de tu cotización.`
+                        });
+                    } catch (err) {
+                        console.error('Error al compartir:', err);
+                    }
+                } else {
+                    // Fallback: Descargar la imagen si no se puede compartir
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'cotizacion_blanco_madera.png';
+                    link.click();
+                    alert("Tu dispositivo no soporta compartir imágenes directamente. La imagen se ha descargado.");
+                }
+            }, 'image/png');
         }
 
-        // Lógica de Impresión / PDF
         function printQuote() {
             window.print();
         }
 
-        // Nuevo: Función que construye el layout de impresión
         function renderPrintView(subtotalWithoutDiscount, totalWithDiscount, discountRate) {
             const printView = document.getElementById('print-view');
             const clientName = document.getElementById('client-name').value.trim();
@@ -833,7 +881,6 @@
             
             let printContent = '';
 
-            // 1. Header de Impresión
             printContent += `
                 <div style="margin-bottom: 25px;">
                     <span class="print-logo-text">blanco&madera</span>
@@ -846,7 +893,6 @@
                 <h2 style="font-size: 14pt; margin-bottom: 10px; color: #555;">Detalle de Productos:</h2>
             `;
 
-            // 2. Lista de Productos
             for (const id in cart) {
                 const item = cart[id];
                 const itemSubtotal = item.precio * item.cantidad;
@@ -859,7 +905,6 @@
                 `;
             }
 
-            // 3. Resumen de Totales
             if (discountRate > 0) {
                 const discountAmount = subtotalWithoutDiscount * discountRate;
                 printContent += `
@@ -880,8 +925,6 @@
             printView.innerHTML = printContent;
         }
 
-
-        // Función que renderiza la lista de productos (Catálogo)
         function renderProductList(data) {
             const productList = document.getElementById('product-list');
             productList.innerHTML = ''; 
@@ -910,7 +953,6 @@
             });
         }
 
-        // Función principal que actualiza todo el dashboard
         function updateDashboard() {
             const categoryFilter = document.getElementById('category-filter');
             const searchBox = document.getElementById('search-box');
@@ -928,12 +970,10 @@
             renderCart(); 
         }
 
-        // Inicialización y Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             parseData();
             populateCategoryFilter();
             
-            // Eventos de control
             document.getElementById('category-filter').addEventListener('change', updateDashboard);
             document.getElementById('search-box').addEventListener('input', updateDashboard);
             document.getElementById('reset-button').addEventListener('click', () => {
@@ -948,20 +988,20 @@
                 updateDashboard();
             });
             
-            // Eventos de Descuento y Exportación
             document.getElementById('discount-select').addEventListener('change', renderCart);
             document.getElementById('client-name').addEventListener('input', renderCart); 
             document.getElementById('whatsapp-number').addEventListener('input', renderCart); 
-            document.getElementById('send-whatsapp-button').addEventListener('click', sendQuoteViaWhatsApp); // Nuevo: Enviar a WhatsApp
+            
+            // ASIGNACIÓN DE EVENTOS A LOS DOS BOTONES
+            document.getElementById('send-whatsapp-text-button').addEventListener('click', sendQuoteViaWhatsAppText);
+            document.getElementById('share-image-button').addEventListener('click', shareQuoteAsImage);
+            
             document.getElementById('print-button').addEventListener('click', printQuote);
             
-            // Inicializar la vista de móvil en el Catálogo
             const isMobile = window.innerWidth < 768;
             if (isMobile) {
-                // Mostrar solo la vista de catálogo al cargar en móvil
                 showView('catalog');
             } else {
-                // Mostrar ambas columnas en desktop
                 document.getElementById('catalog-panel').style.display = 'block';
                 document.getElementById('cart-panel').style.display = 'flex';
                 document.getElementById('filters-container').style.display = 'grid';
